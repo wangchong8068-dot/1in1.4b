@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>十四亿分之一 v1.0</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <section id="s-home" class="screen on">
+    <div class="home-top">
+      <div id="invite" class="invite"></div>
+      <div class="big">十四亿分之一</div>
+      <div class="homage">致敬 Jin's Earth《80亿分之1》</div>
+      <p class="lead">去年，全国出生了 954 万个孩子。<br>你会成为其中哪一个，由不得你。</p>
+      <p class="sub">按各省真实出生人数抽签，决定你生在哪里、什么样的家庭。<br>然后，把这一生过完。</p>
+      <div class="home-me">
+        现在的你在 <b id="home-where"></b><span id="home-src" class="muted"></span>
+        <a id="home-edit">改一下</a>
+        <div id="home-pick" class="home-pick">
+          <select id="sel-prov"></select>
+          <select id="sel-type">
+            <option value="city">城市</option><option value="town">县城或镇</option>
+            <option value="rural">乡村</option><option value="mountain">山区乡村</option>
+          </select>
+        </div>
+        <div class="muted small">游戏会拿这一世和你现在的生活对比。位置只在本机使用，不上传、不保存。</div>
+      </div>
+    </div>
+    <button class="btn primary" id="btn-start">出生</button>
+    <div class="tribute">作者：一二 · v1.0</div>
+  </section>
+
+  <section id="s-cert" class="screen">
+    <div class="card cert">
+      <div class="cert-h">出 生 登 记</div>
+      <div id="cert-body"></div>
+      <div class="odds" id="cert-odds"></div>
+      <div class="mirror-box" id="cert-mirror"></div>
+      <div class="peers-intro" id="peers-intro"></div>
+    </div>
+    <div class="card guess">
+      <b>先猜一猜：这一世你能活到多少岁？</b>
+      <div id="guess"><button data-v="60">60</button><button data-v="70">70</button><button data-v="78">78</button><button data-v="85">85</button><button data-v="95">95</button></div>
+    </div>
+    <button class="btn primary" id="btn-live" disabled>开始这一生</button>
+  </section>
+
+  <section id="s-life" class="screen">
+    <header class="bar">
+      <div><span id="age" class="age">0</span><span class="unit">岁</span></div>
+      <div id="where" class="where"></div>
+      <div class="speed" id="speed">
+        <button data-v="1" class="on">1×</button><button data-v="4">4×</button><button data-v="16">16×</button><button data-v="0">⏸</button>
+      </div>
+    </header>
+    <div class="stats" id="stats"></div>
+    <div class="focus" id="focus"><span>今年的重心</span></div>
+    <div class="legend"><span class="mk">◐</span> 标出的是同一年，<span id="mirror-home"></span>的孩子大多在过的日子</div>
+    <div class="feed" id="feed"></div>
+    <div class="peers" id="peers"></div>
+  </section>
+
+  <section id="s-end" class="screen">
+    <div class="card" id="end-body"></div>
+    <div class="card share">
+      <canvas id="card"></canvas>
+      <div class="share-btns">
+        <button class="btn ghost" id="btn-headline">换个标题</button>
+        <button class="btn primary" id="btn-save">保存分享卡</button>
+      </div>
+      <button class="btn ghost" id="btn-link">复制邀请链接：让朋友也抽一次</button>
+    </div>
+    <div class="card" id="end-two"></div>
+    <div class="card" id="end-bill"></div>
+    <div class="card" id="end-peers"></div>
+    <button class="btn ghost peer-btn" id="btn-peer">换位：用同秒出生的山区孩子的身份，再活一次</button>
+    <div class="card about">
+      <b>关于这个游戏</b>
+      <p>出生地按 2024 年各省出生人数（常住人口×出生率，中国统计年鉴 2025）抽取；寿命按第七次人口普查各省分性别预期寿命；
+      婴儿和 5 岁前死亡率按国家卫健委 2024 年城乡数据；升学概率按 2024 年全国教育事业发展统计公报校准；收入为国家统计局 2024 年各省居民人均可支配收入。
+      标注 * 的数字由游戏模型模拟得出，不是官方统计。</p>
+      <p>你的选择只改变概率，不决定结果。出生在哪里，没有对错。那些生活更难的地方，也有修到家门口的路、每天中午的营养餐，和一直在想办法的人。</p>
+      <p class="tribute-end">灵感与玩法结构来自 Jin's Earth 的《80亿分之1》（1in8b.life）。原作让人体验地球上另一个人的一生，
+      这里把世界缩小到中国。向原作者致敬。</p>
+      <p class="credit">《十四亿分之一》v1.0 · 作者：一二 · 意见与反馈：9338201@qq.com</p>
+    </div>
+    <button class="btn primary" id="btn-again">再活一次</button>
+  </section>
+
+  <div id="modal" class="modal">
+    <div class="modal-box">
+      <div class="m-title" id="m-title"></div>
+      <div class="m-text" id="m-text"></div>
+      <div class="m-opts" id="m-opts"></div>
+      <div class="m-hint">选择只改变概率，不决定结果</div>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+</div>
+<script src="js/data_provinces.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>
